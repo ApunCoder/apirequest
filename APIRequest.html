@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body style="background-color: #212121; color: aliceblue; text-align: center;">
+    
+    <div class="wrapper w-screen h-screen flex flex-col align-center justify-center">
+        <div class="card w-60 drop-shadow-[0_50px_50px_rgba(180,0,0,0.5)] m-auto bg-gradient-to-r from-cyan-500 to-blue-500 rounded-xl p-5">
+            <div class="image-div">
+                <img class="img m-auto h-[200px] w-[200px] rounded-xl">
+            </div>
+            <div class="h2 text-2xl">
+                Name
+            </div>
+            <div class="bio">
+                bio
+            </div>
+            <div class="follower">
+                <span class="followerHeading tracking-wide mr-[40%] text-xl">
+                    Following
+                </span>
+                <span class="fCount text-xl">0</span>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script>
+    const requestUrl = 'https://api.github.com/users/ApunCoder';
+    let data = null;
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', requestUrl);
+
+    xhr.onreadystatechange = function(){
+        // console.log(xhr.readyState);
+        if(xhr.readyState === 4){
+            data = JSON.parse(this.responseText);
+            // console.log(data);
+            // console.log(data.avatar_url);
+            document.querySelector('.img').setAttribute('src', data.avatar_url)
+            document.querySelector('.h2').innerHTML = data.name;
+            document.querySelector('.bio').innerHTML = data.bio;
+            document.querySelector('.fCount').innerHTML = data.following;
+        }
+    }
+
+    xhr.send();
+    // Inject data into elements here
+
+</script>
+</html>
